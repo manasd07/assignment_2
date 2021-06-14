@@ -1,1 +1,2 @@
 # assignment_2
+This is my second assignment at Deqode . Here , I have exposed 2 endpoints for users to search from Github API's. Firstly, one can search for any Github Repo handle with its username and the displayed response will be from github rest api. Second endpoint is based on searching for users with their exact names which is also using Github API on its backend and we are using MongoDB to minimize calls to GithubAPI for the same sets of users.
