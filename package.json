@@ -5,12 +5,12 @@
   "main": "index.js",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run pre-commit",
+      "precommit": "npm run pre-commit",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
-    "**/*.+js": [
+    "*.js": [
       "prettier --write",
       "eslint --fix",
       "git add"
