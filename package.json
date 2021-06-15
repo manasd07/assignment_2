@@ -5,7 +5,7 @@
   "main": "index.js",
   "husky": {
     "hooks": {
-      "precommit": "npm run pre-commit",
+      "pre-commit": "npm run pre-commit",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
@@ -19,9 +19,7 @@
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write .",
-    "pre-commit": "lint-staged",
-    "lint": "eslint . --ext .js"
+    "format": "prettier --write ."
   },
   "author": "Manas Dwivedi",
   "license": "ISC",
