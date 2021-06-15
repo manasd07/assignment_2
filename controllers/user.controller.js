@@ -12,7 +12,6 @@ export const getUserDetails = async (req, res) => {
     const username = req.query.username;
     const dbResponse = await User.findOne({ username });
     if (dbResponse) {
-        console.log("returned from MongoDB");
       return await res.json({
         message: "Success",
         data: dbResponse.userDetails,
@@ -22,7 +21,6 @@ export const getUserDetails = async (req, res) => {
     const response = await axios.get(url);
     if (response.data.items.length > 0) {
       await addUserToDb(username, response.data.items);
-      console.log("Returned from github API");
       return await res.json({ message: "Success", data: response.data.items });
     } else if (response.data.items.length === 0) {
       return await res.json({
