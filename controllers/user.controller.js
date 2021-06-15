@@ -44,3 +44,4 @@ const addUserToDb = async (username, userDetails) => {
   }
 };
 console.log("remove me");
+
