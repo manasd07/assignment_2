@@ -12,14 +12,15 @@
   "lint-staged": {
     "*.js": [
       "prettier --write",
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "pre-commit": "lint-staged",
+    "lint": "eslint . --ext .js"
   },
   "author": "Manas Dwivedi",
   "license": "ISC",

@@ -1,9 +1,10 @@
 import express from "express";
-const router = express.Router();
-import { requestUserRepos } from "../controllers/repo.controller";
+import requestUserRepositories from "../controllers/repo.controller";
 
-router.get("/", (req, res) => {
-  requestUserRepos(req, res);
+const repoRouter = express.Router();
+
+repoRouter.get("/", (req, res) => {
+  requestUserRepositories(req, res);
 });
 
-export default router;
+export default repoRouter;

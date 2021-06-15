@@ -1,9 +1,10 @@
 import express from "express";
-const router = express.Router();
-import { getUserDetails } from "../controllers/user.controller";
+import getUserInfo  from "../controllers/user.controller";
 
-router.get("/", (req, res) => {
-  getUserDetails(req, res);
+const usersRouter = express.Router();
+
+usersRouter.get("/", (req, res) => {
+  getUserInfo(req, res);
 });
 
-export default router;
+export default usersRouter;

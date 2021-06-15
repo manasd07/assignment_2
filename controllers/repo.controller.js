@@ -50,3 +50,4 @@ export const requestUserRepos = async (req, res) => {
 //     throw new Error("Internal Server Exception");
 //   }
 // };
+export default requestUserRepos;
