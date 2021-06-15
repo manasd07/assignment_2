@@ -43,3 +43,4 @@ const addUserToDb = async (username, userDetails) => {
     throw new Error("Internal Server Error");
   }
 };
+console.log("remove me");
