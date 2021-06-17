@@ -1,37 +1,21 @@
-import axios from "axios";
-import Repos from "../models/repo.model";
+import {fetchRepos} from "../utils/helpers/github-api-helper";
 
 export const requestUserRepos = async (req, res) => {
   try {
-    if (!req.body.username) {
+    if (!req.query.search) {
       return res.json({
         message: "Error",
-        error: "Please enter username to search",
+        error: "Please enter repository name to search",
       });
     }
-    const username = req.body.username;
-    // GitHub endpoint, dynamically passing in specified username
-    const url = `https://api.github.com/users/${username}/repos`;
-    // // Querying mongodb to get data if already exists
-    // const mongoData = await Repos.findOne({ username });
-    // if (mongoData) {
-    //   return await res.json({ message: "Success", data: mongoData.repoList });
-    // }
-    const response = await axios.get(url);
-    const finalResponse = [];
-    if (response.data.length) {
-      for (let i = 0; i < response.data.length; i++) {
-        finalResponse.push({
-          repoName: response.data[i].name,
-          ownerName: response.data[i].owner.login,
-          description: response.data[i].description,
-          starCount: response.data[i].stargazers_count,
-          url: response.data[i].html_url,
-        });
-      }
-      // await addDataToDB(username, finalResponse);
+    const searchText = req.query.search;
+    const finalResponse = await fetchRepos(searchText);
+    if(finalResponse.length){
+      return await res.json({ message: "Success", data: finalResponse });
+    }else{
+      return await res.json({ message: "Error",error:"No matching repositories found"});
     }
-    return await res.json({ message: "Success", data: finalResponse });
+    
   } catch (error) {
     return await res.json({
       message: "Success",
@@ -39,15 +23,4 @@ export const requestUserRepos = async (req, res) => {
     });
   }
 };
-// const addDataToDB = async (username, responseData) => {
-//   try {
-//     const repo = new Repos({
-//       username: username,
-//       repoList: responseData,
-//     });
-//     await repo.save();
-//   } catch (error) {
-//     throw new Error("Internal Server Exception");
-//   }
-// };
 export default requestUserRepos;

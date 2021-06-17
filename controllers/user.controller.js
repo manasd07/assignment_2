@@ -1,5 +1,5 @@
-import axios from "axios";
-import User from "../models/user.model";
+import {findOneUser,addUserToDb} from "../utils/helpers/db-helper";
+import {fetchUsers} from "../utils/helpers/github-api-helper";
 
 export const getUserDetails = async (req, res) => {
   try {
@@ -10,15 +10,14 @@ export const getUserDetails = async (req, res) => {
       });
     }
     const username = req.query.username;
-    const dbResponse = await User.findOne({ username });
-    if (dbResponse) {
+    const user = await findOneUser(username);
+    if (user) {
       return await res.json({
         message: "Success",
-        data: dbResponse.userDetails,
+        data: user.userDetails,
       });
     }
-    const url = `https://api.github.com/search/users?q=${username}`;
-    const response = await axios.get(url);
+    const response = await fetchUsers(username);
     if (response.data.items.length > 0) {
       await addUserToDb(username, response.data.items);
       return await res.json({ message: "Success", data: response.data.items });
@@ -29,19 +28,8 @@ export const getUserDetails = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return await res.json({ message: "Internal Server Error", error: error });
   }
 };
-const addUserToDb = async (username, userDetails) => {
-  try {
-    const user = new User({
-      username,
-      userDetails,
-    });
-    await user.save();
-  } catch (error) {
-    throw new Error("Internal Server Error");
-  }
-};
 export default getUserDetails;
-
